@@ -23,6 +23,8 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "stdio.h"
+#include "stdlib.h"
+#include "string.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -45,7 +47,12 @@ UART_HandleTypeDef huart1;
 UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
-uint8_t Rx_data[RFID_FRAME_SIZE];
+const int BUFFER_SIZE = 14; // RFID DATA FRAME FORMAT: 1byte head (value: 2), 10byte data (2byte version + 8byte tag), 2byte checksum, 1byte tail (value: 3)
+const int DATA_SIZE = 10; // 10byte data (2byte version + 8byte tag)
+const int DATA_VERSION_SIZE = 2; // 2byte version (actual meaning of these two bytes may vary)
+const int DATA_TAG_SIZE = 8; // 8byte tag
+const int CHECKSUM_SIZE = 2; // 2byte checksum
+uint8_t buffer[RFID_FRAME_SIZE];
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -54,7 +61,8 @@ static void MX_GPIO_Init(void);
 static void MX_USART1_UART_Init(void);
 static void MX_USART2_UART_Init(void);
 /* USER CODE BEGIN PFP */
-
+uint32_t hexstr_to_value(char *str, unsigned int length);
+uint32_t extract_tag();
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -73,10 +81,11 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
   printf("Received data: ");
   for(int i = 0; i < RFID_FRAME_SIZE; i++)
   {
-	  printf("%d ", Rx_data[i]);
+	  printf("%d ", buffer[i]);
   }
   printf("\n");
-  HAL_UART_Receive_IT(&huart1, Rx_data, RFID_FRAME_SIZE);
+  extract_tag();
+  HAL_UART_Receive_IT(&huart1, buffer, RFID_FRAME_SIZE);
 }
 /* USER CODE END 0 */
 
@@ -111,7 +120,7 @@ int main(void)
   MX_USART1_UART_Init();
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
-  HAL_UART_Receive_IT (&huart1, Rx_data, RFID_FRAME_SIZE);
+  HAL_UART_Receive_IT (&huart1, buffer, RFID_FRAME_SIZE);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -277,7 +286,63 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+uint32_t extract_tag() {
+  uint8_t msg_head = buffer[0];
+  uint8_t *msg_data = buffer + 1; // 10 byte => data contains 2byte version + 8byte tag
+  uint8_t *msg_data_version = msg_data;
+  uint8_t *msg_data_tag = msg_data + 2;
+  uint8_t *msg_checksum = buffer + 11; // 2 byte
+  uint8_t msg_tail = buffer[13];
+  // print message that was sent from RDM630/RDM6300
+  printf("--------\n");
+  printf("Message-Head: ");
+  printf("%d\n", msg_head);
+  printf("Message-Data (HEX):\n");
+  for (int i = 0; i < DATA_VERSION_SIZE; ++i) {
+    printf("%c", (char)msg_data_version[i]);
+  }
+  printf(" (version)\n");
+  for (int i = 0; i < DATA_TAG_SIZE; ++i) {
+    printf("%c", (char)msg_data_tag[i]);
+  }
+  printf(" (tag)\n");
+  printf("Message-Checksum (HEX): ");
+  for (int i = 0; i < CHECKSUM_SIZE; ++i) {
+    printf("%c", (char)msg_checksum[i]);
+  }
+  printf("\n");
+  printf("Message-Tail: ");
+  printf("%d\n", msg_tail);
+  printf("--\n");
+  uint32_t tag = hexstr_to_value((char*)msg_data_tag, DATA_TAG_SIZE);
+  printf("Extracted Tag: ");
+  printf("%lu\n", tag);
+  uint16_t checksum = 0;
+  for (int i = 0; i < DATA_SIZE; i+= CHECKSUM_SIZE) {
+    long val = hexstr_to_value((char*)(msg_data + i), CHECKSUM_SIZE);
+    checksum ^= val;
+  }
+  printf("Extracted Checksum (HEX): ");
+  printf("0x%X", checksum);
+  if (checksum == hexstr_to_value((char*)msg_checksum, CHECKSUM_SIZE)) { // compare calculated checksum to retrieved checksum
+    printf(" (OK)"); // calculated checksum corresponds to transmitted checksum!
+  } else {
+    printf(" (NOT OK)"); // checksums do not match
+  }
+  printf("\n");
+  printf("--------\n");
+  return tag;
+}
 
+uint32_t hexstr_to_value(char *str, unsigned int length) { // converts a hexadecimal value (encoded as ASCII string) to a numeric value
+  char* copy = malloc((sizeof(char) * length) + 1);
+  memcpy(copy, str, sizeof(char) * length);
+  copy[length] = '\0';
+  // the variable "copy" is a copy of the parameter "str". "copy" has an additional '\0' element to make sure that "str" is null-terminated.
+  uint32_t value = strtol(copy, NULL, 16); // strtol converts a null-terminated string to a long value
+  free(copy); // clean up
+  return value;
+}
 /* USER CODE END 4 */
 
 /**

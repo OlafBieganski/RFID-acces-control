@@ -1,0 +1,17 @@
+00:23:09 **** Incremental Build of configuration Debug for project RFID_KPZ ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/keypad.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DUSE_HAL_DRIVER -DSTM32L476xx -DDEBUG -c -I../Core/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/keypad.d" -MT"Core/Src/keypad.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/keypad.o"
+arm-none-eabi-gcc -o "RFID_KPZ.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\chedo\OneDrive\Pulpit\SEMESTR_6\KPZ\RFID-acces-control\RFID_KPZ\STM32L476RGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="RFID_KPZ.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: RFID_KPZ.elf
+ 
+arm-none-eabi-objdump -h -S  RFID_KPZ.elf  > "RFID_KPZ.list"
+arm-none-eabi-objcopy  -O binary  RFID_KPZ.elf  "RFID_KPZ.bin"
+arm-none-eabi-size   RFID_KPZ.elf 
+   text	   data	    bss	    dec	    hex	filename
+   6092	     20	   1572	   7684	   1e04	RFID_KPZ.elf
+Finished building: default.size.stdout
+ 
+Finished building: RFID_KPZ.bin
+ 
+Finished building: RFID_KPZ.list
+ 

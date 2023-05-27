@@ -1,0 +1,31 @@
+#ifndef KEYPAD_H_
+#define KEYPAD_H_
+
+#include "stm32l4xx_hal.h"
+
+/*
+ * ROW 1: | 1 - 2 - 3	|
+ * ROW 2: | 4 - 5 - 6	|
+ * ROW 3: | 7 - 8 - 9	|
+ * ROW 4: | * - 0 - #	|
+ ---------|-------------|
+ 	 	  | C1  C2  C3	|
+ */
+
+#define ROW_1_OUT_PORT GPIOC
+#define ROW_2_OUT_PORT GPIOC
+#define ROW_3_OUT_PORT GPIOB
+#define ROW_4_OUT_PORT GPIOB
+#define COLUMN_1_OUT_PORT GPIOC
+#define COLUMN_2_OUT_PORT GPIOB
+#define COLUMN_3_OUT_PORT GPIOB
+
+#define ROW_1_OUT_PIN GPIO_PIN_8
+#define ROW_2_OUT_PIN GPIO_PIN_7
+#define ROW_3_OUT_PIN GPIO_PIN_15
+#define ROW_4_OUT_PIN GPIO_PIN_13
+#define COLUMN_1_OUT_PIN GPIO_PIN_6
+#define COLUMN_2_OUT_PIN GPIO_PIN_14
+#define COLUMN_3_OUT_PIN GPIO_PIN_12
+
+#endif /* KEYPAD_H_ */

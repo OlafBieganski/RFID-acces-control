@@ -1,0 +1,20 @@
+#include "keypad.h"
+
+void keypad_init(){
+	for(uint8_t l_row = 0; l_row < NUM_OF_ROWS; l_row++)
+		HAL_GPIO_WritePin(row_ports_array[l_row],
+						  row_pins_array[l_row],
+						  GPIO_PIN_SET);
+}
+
+int8_t keypad_scan_pressed_index(){
+	for(uint8_t l_row = 0; l_row < NUM_OF_ROWS; l_row++){
+		HAL_GPIO_WritePin(row_ports_array[l_row],
+						  row_pins_array[l_row],
+						  GPIO_PIN_RESET);
+
+		for(uint8_t l_col = 0; l_col < NUM_OF_COLUMNS; l_col++){
+
+		}
+	}
+}

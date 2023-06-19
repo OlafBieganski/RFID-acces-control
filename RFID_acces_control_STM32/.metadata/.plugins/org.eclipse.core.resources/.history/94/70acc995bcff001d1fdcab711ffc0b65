@@ -1,0 +1,20 @@
+#ifndef INC_RFID_H_
+#define INC_RFID_H_
+
+#include "stm32l4xx_hal.h"
+
+const int BUFFER_SIZE = 14; // RFID DATA FRAME FORMAT: 1byte head (value: 2), 10byte data (2byte version + 8byte tag), 2byte checksum, 1byte tail (value: 3)
+const int DATA_SIZE = 10; // 10byte data (2byte version + 8byte tag)
+const int DATA_VERSION_SIZE = 2; // 2byte version (actual meaning of these two bytes may vary)
+const int DATA_TAG_SIZE = 8; // 8byte tag
+const int CHECKSUM_SIZE = 2; // 2byte checksum
+uint8_t buffer[RFID_FRAME_SIZE];
+
+#define RFID_FRAME_SIZE 14
+
+//void RFID_recive_frame(UART_HandleTypeDef *uart_handle, )
+
+uint32_t extract_tag();
+
+
+#endif /* INC_RFID_H_ */

@@ -1,0 +1,12 @@
+#ifndef INC_FLASH_H_
+#define INC_FLASH_H_
+
+#include "stm32l4xx_hal.h"
+
+extern SPI_HandleTypeDef spi1;
+
+void flash_init();
+void flash_wren();
+void flash_write_byte(uint8_t data_t, uint32_t addres);
+
+#endif /* INC_FLASH_H_ */

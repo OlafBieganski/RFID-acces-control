@@ -51,16 +51,16 @@ static uint16_t column_pins_array[] = {COLUMN_1_IN_PIN,
 									   COLUMN_2_IN_PIN,
 									   COLUMN_3_IN_PIN};
 
+extern int8_t last_pressed_index;
+
 #define NO_BUTTON_PRESSED -1
 #define KEYPAD_ERROR_CHAR '^'
 
 void keypad_init();
 int8_t keypad_scan_pressed_index();
+int8_t keypad_scan_pressed_index_filtered();
 
-static char keypad_index_char_array[] = {'1', '2', '3',
-								  	  	 '4', '5', '6',
-										 '7', '8', '9',
-										 '*', '0', '#'};
+static char keypad_index_char_array[] = {'6','4','5','9','7','8','#','*','0','3','1','2'};
 
 char keypad_index_to_char(int8_t index);
 

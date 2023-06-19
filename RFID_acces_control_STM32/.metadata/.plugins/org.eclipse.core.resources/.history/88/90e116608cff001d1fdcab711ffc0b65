@@ -1,0 +1,9 @@
+#ifndef INC_LCD_H_
+#define INC_LCD_H_
+
+#define SLAVE_ADDRESS_LCD 0x4E
+
+void lcd_send_cmd (char cmd);
+void lcd_send_data (char data);
+
+#endif /* INC_LCD_H_ */

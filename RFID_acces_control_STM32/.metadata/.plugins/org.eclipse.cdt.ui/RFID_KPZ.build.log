@@ -1,0 +1,10 @@
+17:13:21 **** Incremental Build of configuration Debug for project RFID_KPZ ****
+make -j12 all 
+arm-none-eabi-size   RFID_KPZ.elf 
+   text	   data	    bss	    dec	    hex	filename
+  14656	     20	   1772	  16448	   4040	RFID_KPZ.elf
+Finished building: default.size.stdout
+ 
+
+17:13:21 Build Finished. 0 errors, 0 warnings. (took 366ms)
+

@@ -1,0 +1,49 @@
+#include "rfid.h"
+
+uint32_t extract_tag() {
+  /*uint8_t msg_head = buffer[0];
+  uint8_t *msg_data = buffer + 1; // 10 byte => data contains 2byte version + 8byte tag
+  uint8_t *msg_data_version = msg_data;
+  uint8_t *msg_data_tag = msg_data + 2;
+  uint8_t *msg_checksum = buffer + 11; // 2 byte
+  uint8_t msg_tail = buffer[13];
+  // print message that was sent from RDM630/RDM6300
+  printf("--------\n");
+  printf("Message-Head: ");
+  printf("%d\n", msg_head);
+  printf("Message-Data (HEX):\n");
+  for (int i = 0; i < DATA_VERSION_SIZE; ++i) {
+    printf("%c", (char)msg_data_version[i]);
+  }
+  printf(" (version)\n");
+  for (int i = 0; i < DATA_TAG_SIZE; ++i) {
+    printf("%c", (char)msg_data_tag[i]);
+  }
+  printf(" (tag)\n");
+  printf("Message-Checksum (HEX): ");
+  for (int i = 0; i < CHECKSUM_SIZE; ++i) {
+    printf("%c", (char)msg_checksum[i]);
+  }
+  printf("\n");
+  printf("Message-Tail: ");
+  printf("%d\n", msg_tail);
+  printf("--\n");
+  uint32_t tag = hexstr_to_value((char*)msg_data_tag, DATA_TAG_SIZE);
+  printf("Extracted Tag: ");
+  printf("%lu\n", tag);
+  uint16_t checksum = 0;
+  for (int i = 0; i < DATA_SIZE; i+= CHECKSUM_SIZE) {
+    long val = hexstr_to_value((char*)(msg_data + i), CHECKSUM_SIZE);
+    checksum ^= val;
+  }
+  printf("Extracted Checksum (HEX): ");
+  printf("0x%X", checksum);
+  if (checksum == hexstr_to_value((char*)msg_checksum, CHECKSUM_SIZE)) { // compare calculated checksum to retrieved checksum
+    printf(" (OK)"); // calculated checksum corresponds to transmitted checksum!
+  } else {
+    printf(" (NOT OK)"); // checksums do not match
+  }
+  printf("\n");
+  printf("--------\n");
+  return tag;*/
+}

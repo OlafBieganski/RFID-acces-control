@@ -1,0 +1,13 @@
+#include "lcd.c"
+
+void lcd_send_cmd (char cmd){
+
+}
+
+void lcd_send_data (char data){
+
+}
+
+void lcd_init(){
+
+}

@@ -1,6 +1,39 @@
-00:23:09 **** Incremental Build of configuration Debug for project RFID_KPZ ****
+13:22:47 **** Incremental Build of configuration Debug for project RFID_KPZ ****
 make -j12 all 
-arm-none-eabi-gcc "../Core/Src/keypad.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DUSE_HAL_DRIVER -DSTM32L476xx -DDEBUG -c -I../Core/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/keypad.d" -MT"Core/Src/keypad.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/keypad.o"
+arm-none-eabi-gcc "../Core/Src/app.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DUSE_HAL_DRIVER -DSTM32L476xx -DDEBUG -c -I../Core/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/app.d" -MT"Core/Src/app.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/app.o"
+../Core/Src/app.c: In function 'app_change_password_state':
+../Core/Src/app.c:349:3: warning: implicit declaration of function 'memcpy' [-Wimplicit-function-declaration]
+   memcpy(temp_password_buffor, flash_correct_password_buffor, 4);
+   ^~~~~~
+../Core/Src/app.c:349:3: warning: incompatible implicit declaration of built-in function 'memcpy'
+../Core/Src/app.c:349:3: note: include '<string.h>' or provide a declaration of 'memcpy'
+../Core/Src/app.c:354:3: warning: incompatible implicit declaration of built-in function 'memcpy'
+   memcpy(flash_correct_password_buffor, temp_password_buffor, 4);
+   ^~~~~~
+../Core/Src/app.c:354:3: note: include '<string.h>' or provide a declaration of 'memcpy'
+../Core/Src/app.c: In function 'app_main_loop':
+../Core/Src/app.c:425:2: warning: enumeration value 'WRONG_PASSWORD_STATE' not handled in switch [-Wswitch]
+  switch(current_app_state)
+  ^~~~~~
+../Core/Src/app.c:425:2: warning: enumeration value 'CORRECT_PASSWORD_STATE' not handled in switch [-Wswitch]
+In file included from ../Core/Inc/app.h:5:0,
+                 from ../Core/Src/app.c:1:
+At top level:
+../Core/Inc/keypad.h:63:13: warning: 'keypad_index_char_array' defined but not used [-Wunused-variable]
+ static char keypad_index_char_array[] = {'6','4','5','9','7','8','#','*','0','3','1','2'};
+             ^~~~~~~~~~~~~~~~~~~~~~~
+../Core/Inc/keypad.h:50:17: warning: 'column_pins_array' defined but not used [-Wunused-variable]
+ static uint16_t column_pins_array[] = {COLUMN_1_IN_PIN,
+                 ^~~~~~~~~~~~~~~~~
+../Core/Inc/keypad.h:45:17: warning: 'row_pins_array' defined but not used [-Wunused-variable]
+ static uint16_t row_pins_array[] = {ROW_1_OUT_PIN,
+                 ^~~~~~~~~~~~~~
+../Core/Inc/keypad.h:41:22: warning: 'column_ports_array' defined but not used [-Wunused-variable]
+ static GPIO_TypeDef *column_ports_array[] = {COLUMN_1_IN_PORT,
+                      ^~~~~~~~~~~~~~~~~~
+../Core/Inc/keypad.h:36:22: warning: 'row_ports_array' defined but not used [-Wunused-variable]
+ static GPIO_TypeDef *row_ports_array[] = {ROW_1_OUT_PORT,
+                      ^~~~~~~~~~~~~~~
 arm-none-eabi-gcc -o "RFID_KPZ.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\chedo\OneDrive\Pulpit\SEMESTR_6\KPZ\RFID-acces-control\RFID_KPZ\STM32L476RGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="RFID_KPZ.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 Finished building target: RFID_KPZ.elf
  
@@ -8,7 +41,7 @@ arm-none-eabi-objdump -h -S  RFID_KPZ.elf  > "RFID_KPZ.list"
 arm-none-eabi-objcopy  -O binary  RFID_KPZ.elf  "RFID_KPZ.bin"
 arm-none-eabi-size   RFID_KPZ.elf 
    text	   data	    bss	    dec	    hex	filename
-   6092	     20	   1572	   7684	   1e04	RFID_KPZ.elf
+  28620	     84	   3828	  32532	   7f14	RFID_KPZ.elf
 Finished building: default.size.stdout
  
 Finished building: RFID_KPZ.bin
@@ -16,5 +49,5 @@ Finished building: RFID_KPZ.bin
 Finished building: RFID_KPZ.list
  
 
-00:23:11 Build Finished. 0 errors, 0 warnings. (took 2s.75ms)
+13:22:48 Build Finished. 0 errors, 10 warnings. (took 1s.269ms)
 
